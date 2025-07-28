@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استبيان مستلمي الزكاة</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-image: url('zakat.jpg'); /* صورة الخلفية */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #1e3a1e;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      font-size: 18px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    .options {
+      margin-bottom: 15px;
+    }
+
+    input[type='text'],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #15803d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #166534;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 16px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- صورة العنوان -->
+  <img src="zakatttt.png" alt="عنوان الاستبيان" style="display: block; margin: 20px auto; max-width: 100%; height: auto;" />
+
+  <form action="https://formspree.io/f/mgvzyapw" method="POST" id="zakatForm">
+
+    <div class="section">
+      <label>هل أنت من مستلمي الزكاة؟</label>
+      <div class="options">
+        <input type="radio" name="is_recipient" value="نعم" onclick="showForm()" required /> نعم<br />
+        <input type="radio" name="is_recipient" value="لا" onclick="hideForm()" /> لا
+      </div>
+    </div>
+
+    <div id="fullForm" class="hidden">
+
+      <div class="section">
+        <label>الجنس:</label>
+        <div class="options">
+          <input type="radio" name="gender" value="ذكر" required /> ذكر<br />
+          <input type="radio" name="gender" value="أنثى" /> أنثى
+        </div>
+
+        <label>الفئة العمرية:</label>
+        <div class="options">
+          <input type="radio" name="age_group" value="أقل من 18" required /> أقل من 18<br />
+          <input type="radio" name="age_group" value="18–30" /> 18–30<br />
+          <input type="radio" name="age_group" value="31–50" /> 31–50<br />
+          <input type="radio" name="age_group" value="أكثر من 50" /> أكثر من 50
+        </div>
+      </div>
+
+      <div class="section">
+        <label>كيف تم تسليم الزكاة لك؟</label>
+        <div class="options">
+          <input type="radio" name="delivery_type" value="مبلغ نقدي" required /> مبلغ نقدي<br />
+          <input type="radio" name="delivery_type" value="مواد غذائية" /> مواد غذائية<br />
+          <input type="radio" name="delivery_type" value="أدوية أو علاج" /> أدوية أو علاج<br />
+          <input type="radio" name="delivery_type" value="مزيج" /> مزيج من ذلك<br />
+          <input type="radio" name="delivery_type" value="غير ذلك" /> غير ذلك
+        </div>
+
+        <label>كم استمرت معك الزكاة؟</label>
+        <div class="options">
+          <input type="radio" name="duration" value="أقل من أسبوع" required /> أقل من أسبوع<br />
+          <input type="radio" name="duration" value="أسبوع إلى شهر" /> أسبوع إلى شهر<br />
+          <input type="radio" name="duration" value="أكثر من شهر" /> أكثر من شهر<br />
+          <input type="radio" name="duration" value="لم تكن كافية" /> لم تكن كافية إطلاقاً
+        </div>
+
+        <label>ما أهم الأمور التي استخدمت فيها الزكاة؟</label>
+        <div class="options">
+          <input type="radio" name="usage" value="طعام وشراب" required /> طعام وشراب<br />
+          <input type="radio" name="usage" value="دواء وعلاج" /> دواء وعلاج<br />
+          <input type="radio" name="usage" value="إيجار أو سكن" /> إيجار أو سكن<br />
+          <input type="radio" name="usage" value="ملابس" /> ملابس<br />
+          <input type="radio" name="usage" value="أشياء مدرسية" /> أشياء مدرسية<br />
+          <input type="radio" name="usage" value="أخرى" /> أخرى
+        </div>
+
+        <label>هل كفت الزكاة احتياجاتك اليومية؟</label>
+        <div class="options">
+          <input type="radio" name="sufficiency" value="كفتني بالكامل" required /> كفتني بالكامل<br />
+          <input type="radio" name="sufficiency" value="كفتني جزئياً" /> كفتني جزئياً<br />
+          <input type="radio" name="sufficiency" value="لم تكفِ إطلاقاً" /> لم تكفِ إطلاقاً
+        </div>
+
+        <label>كم مرة استلمت الزكاة هذا العام؟</label>
+        <div class="options">
+          <input type="radio" name="times_received" value="مرة واحدة" required /> مرة واحدة<br />
+          <input type="radio" name="times_received" value="مرتين" /> مرتين<br />
+          <input type="radio" name="times_received" value="أكثر من مرتين" /> أكثر من مرتين
+        </div>
+
+        <label>هل تعتقد أن توزيع الزكاة كان عادلاً؟</label>
+        <div class="options">
+          <input type="radio" name="fairness" value="نعم" required /> نعم<br />
+          <input type="radio" name="fairness" value="إلى حد ما" /> إلى حد ما<br />
+          <input type="radio" name="fairness" value="لا" /> لا
+        </div>
+      </div>
+
+      <div class="section">
+        <label>هل ترى أن المساعدة المقدمة عبر الزكاة منتظمة؟</label>
+        <div class="options">
+          <input type="radio" name="regular_support" value="نعم" required /> نعم<br />
+          <input type="radio" name="regular_support" value="لا" /> لا
+        </div>
+
+        <label>ما نوع المشروع الذي ترغب في دعمه من أموال الزكاة؟</label>
+        <input type="text" name="preferred_project" />
+      </div>
+
+      <div class="section">
+        <label>البريد الإلكتروني (اختياري للتواصل):</label>
+        <input type="email" name="email" placeholder="example@email.com" />
+      </div>
+
+      <button type="submit">إرسال</button>
+    </div>
+  </form>
+
+  <script>
+    function showForm() {
+      document.getElementById('fullForm').classList.remove('hidden');
+    }
+    function hideForm() {
+      document.getElementById('fullForm').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
