@@ -31,40 +31,38 @@ body {
 
 /* حاوي الشعار */
 .logo-container {
-    text-align: center;
-    margin: 0 auto 30px;
-    max-width: 900px;
-    width: 100%;
-    animation: fadeInDown 0.8s ease-out;
-    box-sizing: border-box;
+    text-align: center; /* محاذاة المحتوى إلى الوسط */
+    margin: 0 auto 30px; /* توسيط الحاوية أفقياً وإضافة مسافة 30px أسفلها */
+    max-width: 900px; /* الحد الأقصى لعرض الحاوية */
+    width: 100%; /* عرض كامل داخل الحاوية الأم */
+    animation: fadeInDown 0.8s ease-out; /* تأثير دخول تدريجي */
+    box-sizing: border-box; /* تضمين الحشوة والحدود ضمن الحجم */
 }
-
 
 /* خلفية الشعار مع الصورة */
 .logo-background-with-image {
-    display: inline-block;
-    background: linear-gradient(135deg, #15803d, #22c55e);
-    border: 4px solid #15803d;
-    border-radius: 25px;
-    padding: 50px 60px;
-    box-shadow: 0 12px 40px rgba(21, 128, 61, 0.3);
-    position: relative;
-    overflow: hidden;
-    max-width: 95%;
-    text-align: center;
+    display: flex; /* استخدام فلكس لترتيب المحتوى أفقياً وعمودياً */
+    justify-content: center; /* توسيط المحتوى أفقياً */
+    align-items: center; /* توسيط المحتوى عمودياً */
+    background-image: url('zakat.jpg'); /* صورة الخلفية */
+    background-size: cover; /* تغطية الحاوية بالكامل بصورة الخلفية */
+    background-position: center; /* توسيط صورة الخلفية */
+    padding: 20px 30px; /* حشوة داخلية مناسبة */
+    max-width: 900px; /* الحد الأقصى لعرض الحاوية */
+    margin: 0 auto; /* توسيط الحاوية أفقياً */
+    border-radius: 12px; /* حواف مستديرة */
+    box-sizing: border-box; /* تضمين الحشوة والحدود ضمن الحجم */
 }
 
-/* تأثير تعتيم خفيف للخلفية لتحسين وضوح الشعار */
-.logo-background-with-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: inherit;
-    z-index: 1;
+/* صورة الشعار الرئيسية */
+.logo-image {
+    max-width: 100%; /* عدم تجاوز عرض الحاوية الأم */
+    height: auto; /* الحفاظ على نسبة ارتفاع الصورة */
+    display: block; /* جعل الصورة عنصر كتلي */
+    margin: 0 auto; /* توسيط الصورة داخل الحاوية */
+    filter: contrast(1.2) brightness(1.1) drop-shadow(2px 2px 8px rgba(0,0,0,0.5)); /* تحسين وضوح الصورة */
+    position: relative; /* تموضع نسبي */
+    z-index: 2; /* طبقة أعلى لضمان ظهورها فوق الخلفية */
 }
 
 /* صورة الشعار الرئيسية */
