@@ -592,3 +592,15 @@ body {
         font-size: 18px;
     }
 }
+
+
+.logo-background-with-image {
+  background-image: url('zakat.jpg'); /* غيّر الاسم إلى اسم صورة الخلفية */
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px; /* اختياري: يجعل الحواف مستديرة */
+}
