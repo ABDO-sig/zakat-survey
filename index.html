@@ -13,7 +13,7 @@
         <!-- شعار الزكاة -->
         <div class="logo-container">
             <div class="logo-background-with-image">
-                <img src="attached_assets/zakatttt_1753721861802.png" alt="شعار صندوق الزكاة - مصراتة" class="logo-image" />
+                <img src="zakatttt.png" alt="شعار صندوق الزكاة - مصراتة" class="logo-image" />
             </div>
         </div>
 
@@ -445,8 +445,20 @@
                     </div>
                 </div>
 
+                <!-- الملاحظات والتعليقات -->
+                <div class="section">
+                    <h2 class="question-title">الملاحظات والتعليقات</h2>
+                    
+                    <div class="question-group">
+                        <h3 class="sub-question">هل لديك أي ملاحظات أو اقتراحات لتحسين الخدمة؟</h3>
+                        <div class="text-input-container">
+                            <textarea name="comments" placeholder="اكتب ملاحظاتك واقتراحاتك هنا..." rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- زر الإرسال -->
-                <div class="submit-container">
+                <div class="submit-section">
                     <button type="submit" class="submit-btn">
                         <span class="btn-text">إرسال الاستبيان</span>
                         <span class="btn-icon">←</span>
@@ -456,11 +468,14 @@
         </form>
 
         <!-- رسالة الشكر -->
-        <div id="thankYouMessage" class="hidden">
-            <div class="thank-you-container">
-                <img src="assets/thank-you.svg" alt="شكراً لكم" class="thank-you-image" />
-                <h2>تم إرسال الاستبيان بنجاح</h2>
-                <p>نشكركم على وقتكم ومساهمتكم في تحسين خدمات الزكاة</p>
+        <div id="thankYouMessage" class="section thank-you-message hidden">
+            <div class="thank-you-content">
+                <div class="success-icon">✓</div>
+                <h2>شكراً لك!</h2>
+                <p>تم إرسال استبيانك بنجاح. نقدر وقتك ومساهمتك في تحسين خدماتنا.</p>
+                <div class="thank-you-footer">
+                    <p>صندوق الزكاة - مصراتة</p>
+                </div>
             </div>
         </div>
     </div>
