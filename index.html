@@ -1,182 +1,470 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>استبيان مستلمي الزكاة</title>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background-image: url('zakat.jpg'); /* صورة الخلفية */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: #1e3a1e;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-      font-size: 18px;
-    }
-
-    .section {
-      margin-bottom: 20px;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 15px;
-      border-radius: 10px;
-    }
-
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-weight: bold;
-    }
-
-    .options {
-      margin-bottom: 15px;
-    }
-
-    input[type='text'],
-    input[type="email"],
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #15803d;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #166534;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        font-size: 16px;
-        padding: 10px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>استبيان مستلمي الزكاة - مصراتة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- حاوي الاستبيان الرئيسي -->
+    <div class="container">
+        <!-- شعار الزكاة -->
+        <div class="logo-container">
+            <div class="logo-background-with-image">
+                <img src="attached_assets/zakatttt_1753721861802.png" alt="شعار صندوق الزكاة - مصراتة" class="logo-image" />
+            </div>
+        </div>
 
-  <!-- صورة العنوان -->
-  <img src="ZAKATLOGO.png" alt="عنوان الاستبيان" style="display: block; margin: 20px auto; max-width: 100%; height: auto;" />
+        <!-- نموذج الاستبيان -->
+        <form id="zakatForm" action="https://formspree.io/f/mgvzyapw" method="POST">
+            
+            <!-- السؤال الأول: مدينة مصراتة -->
+            <div class="section">
+                <h2 class="question-title">هل أنت من مدينة مصراتة؟</h2>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="from_misurata" value="نعم" onchange="handleMisurataQuestion(this)" required />
+                        <span class="option-box">
+                            <span class="option-text">نعم</span>
+                        </span>
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="from_misurata" value="لا" onchange="handleMisurataQuestion(this)" />
+                        <span class="option-box">
+                            <span class="option-text">لا</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
 
-  <form action="https://formspree.io/f/mgvzyapw" method="POST" id="zakatForm">
+            <!-- رسالة للمستخدمين من خارج مصراتة -->
+            <div id="outsideMisurataMessage" class="section hidden">
+                <div class="info-message">
+                    <p>نشكركم لاهتمامكم، لكن هذا الاستبيان مخصص لمستلمي الزكاة من مدينة مصراتة فقط.</p>
+                </div>
+            </div>
 
-    <div class="section">
-      <label>هل أنت من مستلمي الزكاة؟</label>
-      <div class="options">
-        <input type="radio" name="is_recipient" value="نعم" onclick="showForm()" required /> نعم<br />
-        <input type="radio" name="is_recipient" value="لا" onclick="hideForm()" /> لا
-      </div>
+            <!-- السؤال الثاني: مستلم زكاة -->
+            <div id="recipientSection" class="section hidden">
+                <h2 class="question-title">هل أنت من مستلمي الزكاة؟</h2>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="is_recipient" value="نعم" onchange="handleRecipientQuestion(this)" required />
+                        <span class="option-box">
+                            <span class="option-text">نعم</span>
+                        </span>
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="is_recipient" value="لا" onchange="handleRecipientQuestion(this)" />
+                        <span class="option-box">
+                            <span class="option-text">لا</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- رسالة لغير مستلمي الزكاة -->
+            <div id="nonRecipientMessage" class="section hidden">
+                <div class="info-message">
+                    <p>نشكركم لمشاركتكم، لكن هذا الاستبيان مخصص لمستلمي الزكاة فقط.</p>
+                </div>
+            </div>
+
+            <!-- النموذج الكامل للمستلمين -->
+            <div id="fullForm" class="hidden">
+
+                <!-- المعلومات الشخصية -->
+                <div class="section">
+                    <h2 class="question-title">المعلومات الشخصية</h2>
+                    
+                    <div class="question-group">
+                        <h3 class="sub-question">الجنس:</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="gender" value="ذكر" required />
+                                <span class="option-box">
+                                    <span class="option-text">ذكر</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="gender" value="أنثى" />
+                                <span class="option-box">
+                                    <span class="option-text">أنثى</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">الفئة العمرية:</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="age_group" value="أقل من 18" required />
+                                <span class="option-box">
+                                    <span class="option-text">أقل من 18</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="age_group" value="18–30" />
+                                <span class="option-box">
+                                    <span class="option-text">18–30</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="age_group" value="31–50" />
+                                <span class="option-box">
+                                    <span class="option-text">31–50</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="age_group" value="أكثر من 50" />
+                                <span class="option-box">
+                                    <span class="option-text">أكثر من 50</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- معلومات التسليم والاستخدام -->
+                <div class="section">
+                    <h2 class="question-title">معلومات التسليم والاستخدام</h2>
+                    
+                    <div class="question-group">
+                        <h3 class="sub-question">كيف تم تسليم الزكاة لك؟</h3>
+                        <div class="multi-choice-note">
+                            <p>يمكنك اختيار أكثر من خيار</p>
+                        </div>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="checkbox" name="delivery_type" value="مبلغ نقدي" />
+                                <span class="option-box">
+                                    <span class="option-text">مبلغ نقدي</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="delivery_type" value="مواد غذائية" />
+                                <span class="option-box">
+                                    <span class="option-text">مواد غذائية</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="delivery_type" value="أدوية أو علاج" />
+                                <span class="option-box">
+                                    <span class="option-text">أدوية أو علاج</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="delivery_type" value="مزيج" />
+                                <span class="option-box">
+                                    <span class="option-text">مزيج من ذلك</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="delivery_type" value="غير ذلك" onchange="toggleOtherFieldCheckbox(this, 'delivery_other')" />
+                                <span class="option-box">
+                                    <span class="option-text">غير ذلك</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div id="delivery_other" class="other-field hidden">
+                            <input type="text" name="delivery_type_other" placeholder="يرجى التوضيح..." />
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">كم استمرت معك الزكاة؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="duration" value="أقل من أسبوع" required />
+                                <span class="option-box">
+                                    <span class="option-text">أقل من أسبوع</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="duration" value="أسبوع إلى شهر" />
+                                <span class="option-box">
+                                    <span class="option-text">أسبوع إلى شهر</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="duration" value="أكثر من شهر" />
+                                <span class="option-box">
+                                    <span class="option-text">أكثر من شهر</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="duration" value="لم تكن كافية" />
+                                <span class="option-box">
+                                    <span class="option-text">لم تكن كافية إطلاقاً</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">ما أهم الأمور التي استخدمت فيها الزكاة؟</h3>
+                        <div class="multi-choice-note">
+                            <p>يمكنك اختيار أكثر من خيار</p>
+                        </div>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="checkbox" name="usage" value="طعام وشراب" />
+                                <span class="option-box">
+                                    <span class="option-text">طعام وشراب</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="usage" value="دواء وعلاج" />
+                                <span class="option-box">
+                                    <span class="option-text">دواء وعلاج</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="usage" value="إيجار أو سكن" />
+                                <span class="option-box">
+                                    <span class="option-text">إيجار أو سكن</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="usage" value="ملابس" />
+                                <span class="option-box">
+                                    <span class="option-text">ملابس</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="usage" value="أشياء مدرسية" />
+                                <span class="option-box">
+                                    <span class="option-text">أشياء مدرسية</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="usage" value="أخرى" onchange="toggleOtherFieldCheckbox(this, 'usage_other')" />
+                                <span class="option-box">
+                                    <span class="option-text">أخرى</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div id="usage_other" class="other-field hidden">
+                            <input type="text" name="usage_other" placeholder="يرجى التوضيح..." />
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">ما هي طريقة التواصل المفضلة لديك لاستقبال المعلومات من صندوق الزكاة؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="contact_method" value="هاتف" required />
+                                <span class="option-box">
+                                    <span class="option-text">الهاتف</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="contact_method" value="واتساب" />
+                                <span class="option-box">
+                                    <span class="option-text">تطبيق واتساب</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="contact_method" value="زيارة منزلية" />
+                                <span class="option-box">
+                                    <span class="option-text">الزيارة المنزلية</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="contact_method" value="مكتب الزكاة" />
+                                <span class="option-box">
+                                    <span class="option-text">زيارة مكتب الزكاة</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">هل واجهت أي صعوبات في الحصول على الزكاة؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="difficulties" value="لا توجد صعوبات" required />
+                                <span class="option-box">
+                                    <span class="option-text">لا، لم أواجه أي صعوبات</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="difficulties" value="إجراءات معقدة" />
+                                <span class="option-box">
+                                    <span class="option-text">الإجراءات معقدة</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="difficulties" value="وقت طويل" />
+                                <span class="option-box">
+                                    <span class="option-text">وقت انتظار طويل</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="difficulties" value="صعوبة الوصول" />
+                                <span class="option-box">
+                                    <span class="option-text">صعوبة الوصول للمكتب</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="difficulties" value="نقص المعلومات" />
+                                <span class="option-box">
+                                    <span class="option-text">نقص في المعلومات</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">كم مرة استلمت الزكاة هذا العام؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="times_received" value="مرة واحدة" required />
+                                <span class="option-box">
+                                    <span class="option-text">مرة واحدة</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="times_received" value="مرتين" />
+                                <span class="option-box">
+                                    <span class="option-text">مرتين</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="times_received" value="أكثر من مرتين" />
+                                <span class="option-box">
+                                    <span class="option-text">أكثر من مرتين</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">ما مدى رضاك عن طريقة توزيع الزكاة الحالية؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="satisfaction_current" value="راضي جداً" required />
+                                <span class="option-box">
+                                    <span class="option-text">راضي جداً</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="satisfaction_current" value="راضي" />
+                                <span class="option-box">
+                                    <span class="option-text">راضي</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="satisfaction_current" value="محايد" />
+                                <span class="option-box">
+                                    <span class="option-text">محايد</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="satisfaction_current" value="غير راضي" />
+                                <span class="option-box">
+                                    <span class="option-text">غير راضي</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="satisfaction_current" value="غير راضي إطلاقاً" />
+                                <span class="option-box">
+                                    <span class="option-text">غير راضي إطلاقاً</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الدعم والمشاريع المستقبلية -->
+                <div class="section">
+                    <h2 class="question-title">الدعم والمشاريع المستقبلية</h2>
+                    
+                    <div class="question-group">
+                        <h3 class="sub-question">هل ترى أن المساعدة المقدمة عبر الزكاة منتظمة؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="regular_support" value="نعم" required />
+                                <span class="option-box">
+                                    <span class="option-text">نعم</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="regular_support" value="لا" />
+                                <span class="option-box">
+                                    <span class="option-text">لا</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">ما نوع المشروع الذي ترغب في دعمه من أموال الزكاة؟</h3>
+                        <div class="text-input-container">
+                            <textarea name="preferred_project" placeholder="اكتب اقتراحك هنا..." rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <h3 class="sub-question">هل تنصح الآخرين بالتقدم للحصول على الزكاة من صندوق زكاة مصراتة؟</h3>
+                        <div class="options-container">
+                            <label class="option-item">
+                                <input type="radio" name="recommend" value="نعم، بشدة" required />
+                                <span class="option-box">
+                                    <span class="option-text">نعم، أنصح بشدة</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="recommend" value="نعم" />
+                                <span class="option-box">
+                                    <span class="option-text">نعم، أنصح</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="recommend" value="ربما" />
+                                <span class="option-box">
+                                    <span class="option-text">ربما</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="recommend" value="لا" />
+                                <span class="option-box">
+                                    <span class="option-text">لا أنصح</span>
+                                </span>
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="recommend" value="لا، إطلاقاً" />
+                                <span class="option-box">
+                                    <span class="option-text">لا أنصح إطلاقاً</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- زر الإرسال -->
+                <div class="submit-container">
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">إرسال الاستبيان</span>
+                        <span class="btn-icon">←</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- رسالة الشكر -->
+        <div id="thankYouMessage" class="hidden">
+            <div class="thank-you-container">
+                <img src="assets/thank-you.svg" alt="شكراً لكم" class="thank-you-image" />
+                <h2>تم إرسال الاستبيان بنجاح</h2>
+                <p>نشكركم على وقتكم ومساهمتكم في تحسين خدمات الزكاة</p>
+            </div>
+        </div>
     </div>
 
-    <div id="fullForm" class="hidden">
-
-      <div class="section">
-        <label>الجنس:</label>
-        <div class="options">
-          <input type="radio" name="gender" value="ذكر" required /> ذكر<br />
-          <input type="radio" name="gender" value="أنثى" /> أنثى
-        </div>
-
-        <label>الفئة العمرية:</label>
-        <div class="options">
-          <input type="radio" name="age_group" value="أقل من 18" required /> أقل من 18<br />
-          <input type="radio" name="age_group" value="18–30" /> 18–30<br />
-          <input type="radio" name="age_group" value="31–50" /> 31–50<br />
-          <input type="radio" name="age_group" value="أكثر من 50" /> أكثر من 50
-        </div>
-      </div>
-
-      <div class="section">
-        <label>كيف تم تسليم الزكاة لك؟</label>
-        <div class="options">
-          <input type="radio" name="delivery_type" value="مبلغ نقدي" required /> مبلغ نقدي<br />
-          <input type="radio" name="delivery_type" value="مواد غذائية" /> مواد غذائية<br />
-          <input type="radio" name="delivery_type" value="أدوية أو علاج" /> أدوية أو علاج<br />
-          <input type="radio" name="delivery_type" value="مزيج" /> مزيج من ذلك<br />
-          <input type="radio" name="delivery_type" value="غير ذلك" /> غير ذلك
-        </div>
-
-        <label>كم استمرت معك الزكاة؟</label>
-        <div class="options">
-          <input type="radio" name="duration" value="أقل من أسبوع" required /> أقل من أسبوع<br />
-          <input type="radio" name="duration" value="أسبوع إلى شهر" /> أسبوع إلى شهر<br />
-          <input type="radio" name="duration" value="أكثر من شهر" /> أكثر من شهر<br />
-          <input type="radio" name="duration" value="لم تكن كافية" /> لم تكن كافية إطلاقاً
-        </div>
-
-        <label>ما أهم الأمور التي استخدمت فيها الزكاة؟</label>
-        <div class="options">
-          <input type="radio" name="usage" value="طعام وشراب" required /> طعام وشراب<br />
-          <input type="radio" name="usage" value="دواء وعلاج" /> دواء وعلاج<br />
-          <input type="radio" name="usage" value="إيجار أو سكن" /> إيجار أو سكن<br />
-          <input type="radio" name="usage" value="ملابس" /> ملابس<br />
-          <input type="radio" name="usage" value="أشياء مدرسية" /> أشياء مدرسية<br />
-          <input type="radio" name="usage" value="أخرى" /> أخرى
-        </div>
-
-        <label>هل كفت الزكاة احتياجاتك اليومية؟</label>
-        <div class="options">
-          <input type="radio" name="sufficiency" value="كفتني بالكامل" required /> كفتني بالكامل<br />
-          <input type="radio" name="sufficiency" value="كفتني جزئياً" /> كفتني جزئياً<br />
-          <input type="radio" name="sufficiency" value="لم تكفِ إطلاقاً" /> لم تكفِ إطلاقاً
-        </div>
-
-        <label>كم مرة استلمت الزكاة هذا العام؟</label>
-        <div class="options">
-          <input type="radio" name="times_received" value="مرة واحدة" required /> مرة واحدة<br />
-          <input type="radio" name="times_received" value="مرتين" /> مرتين<br />
-          <input type="radio" name="times_received" value="أكثر من مرتين" /> أكثر من مرتين
-        </div>
-
-        <label>هل تعتقد أن توزيع الزكاة كان عادلاً؟</label>
-        <div class="options">
-          <input type="radio" name="fairness" value="نعم" required /> نعم<br />
-          <input type="radio" name="fairness" value="إلى حد ما" /> إلى حد ما<br />
-          <input type="radio" name="fairness" value="لا" /> لا
-        </div>
-      </div>
-
-      <div class="section">
-        <label>هل ترى أن المساعدة المقدمة عبر الزكاة منتظمة؟</label>
-        <div class="options">
-          <input type="radio" name="regular_support" value="نعم" required /> نعم<br />
-          <input type="radio" name="regular_support" value="لا" /> لا
-        </div>
-
-        <label>ما نوع المشروع الذي ترغب في دعمه من أموال الزكاة؟</label>
-        <input type="text" name="preferred_project" />
-      </div>
-
-      <button type="submit">إرسال</button>
-    </div>
-  </form>
-
-  <script>
-    function showForm() {
-      document.getElementById('fullForm').classList.remove('hidden');
-    }
-    function hideForm() {
-      document.getElementById('fullForm').classList.add('hidden');
-    }
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
